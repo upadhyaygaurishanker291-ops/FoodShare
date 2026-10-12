@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account and partner profile in the FoodShare network",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["DONOR", "NGO", "VOLUNTEER"] },
+        "organization": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "name", "role", "organization", "email"]
+    },
+    "FoodDonation": {
+      "title": "FoodDonation",
+      "description": "Excess food donation listed for community distribution",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "donorId": { "type": "string" },
+        "donorName": { "type": "string" },
+        "donorPhone": { "type": "string" },
+        "donorOrg": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "quantityMeals": { "type": "integer" },
+        "quantityWeightKg": { "type": "number" },
+        "foodType": { "type": "string", "enum": ["VEG", "NON_VEG", "VEGAN", "BAKERY", "PACKAGED"] },
+        "cookedTimeMillis": { "type": "integer" },
+        "expiryTimeMillis": { "type": "integer" },
+        "pickupAddress": { "type": "string" },
+        "pickupInstructions": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "CLAIMED", "OUT_FOR_DELIVERY", "DELIVERED", "CANCELLED"] },
+        "claimedByNgoId": { "type": "string" },
+        "claimedByNgoName": { "type": "string" },
+        "claimedAtMillis": { "type": "integer" },
+        "assignedVolunteerId": { "type": "string" },
+        "assignedVolunteerName": { "type": "string" },
+        "outForDeliveryAtMillis": { "type": "integer" },
+        "deliveredAtMillis": { "type": "integer" },
+        "deliveryNotes": { "type": "string" },
+        "verificationOtp": { "type": "string" },
+        "createdAtMillis": { "type": "integer" }
+      },
+      "required": ["id", "donorId", "donorOrg", "title", "quantityMeals", "foodType", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User partner profiles and permissions"
+    },
+    "/food_donations/{donationId}": {
+      "schema": "FoodDonation",
+      "description": "Active and completed food donation listings"
+    }
+  }
+}
